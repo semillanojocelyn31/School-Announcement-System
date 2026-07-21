@@ -1,1 +1,322 @@
-# School-Announcement-System
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPSU MPC - Chronological School Announcement System</title>
+    <style>
+        /* CSS: Styling and Layout */
+        :root {
+            --cpsu-green: #006400; /* Primary CPSU Green */
+            --cpsu-gold: #FFD700;
+            --dark-gray: #333;
+            --light-bg: #f4f7f6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-gray);
+            padding-bottom: 60px;
+        }
+
+        /* Campus Header */
+        header {
+            background-color: var(--cpsu-green);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--cpsu-gold);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            font-size: 1rem;
+            color: var(--cpsu-gold);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Filter Controls */
+        .filter-section {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .filter-title {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #666;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .filter-btn {
+            background-color: white;
+            border: 2px solid var(--cpsu-green);
+            color: var(--cpsu-green);
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 20px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--cpsu-green);
+            color: white;
+        }
+
+        /* Announcement Stream Layout */
+        .announcement-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-left: 6px solid var(--cpsu-green);
+            padding: 22px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: white;
+        }
+
+        /* Categorized Date Badge Colors */
+        .badge.early-year { background-color: #0275d8; }  /* June - August */
+        .badge.mid-year { background-color: #f0ad4e; }    /* September - December */
+        .badge.late-year { background-color: #9c27b0; }   /* January - May */
+
+        .date {
+            font-size: 0.85rem;
+            color: #333;
+            font-weight: bold;
+            background-color: var(--cpsu-gold);
+            padding: 4px 12px;
+            border-radius: 12px;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            color: #111;
+            font-size: 1.3rem;
+        }
+
+        .card p {
+            line-height: 1.6;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HTML: Layout Frame -->
+    <header>
+        <h1>Central Philippines State University</h1>
+        <p>Moises Padilla Campus — Academic Year Announcements</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- Interactive Date Filters -->
+        <div class="filter-section">
+            <div class="filter-title">Filter Board by Timeline</div>
+            <div class="filter-container">
+                <button class="filter-btn active" onclick="filterAnnouncements('all')">Full Academic Year</button>
+                <button class="filter-btn" onclick="filterAnnouncements('early')">June – August</button>
+                <button class="filter-btn" onclick="filterAnnouncements('mid')">September – December</button>
+                <button class="filter-btn" onclick="filterAnnouncements('late')">January – May</button>
+            </div>
+        </div>
+
+        <!-- Dynamic Announcement Stream -->
+        <div class="announcement-list" id="announcementBox">
+            
+            <!-- JUNE – AUGUST EVENTS -->
+            <div class="card" data-category="early">
+                <div class="card-header">
+                    <span class="badge early-year">Academic</span>
+                    <span class="date">June 08, 2026</span>
+                </div>
+                <h3>Registration & Enrollment</h3>
+                <p>Attention all new and returning Cenphians! Please complete your online or in-person submission of required documentary credentials to the registrar's office to officially lock your schedules for the upcoming term.</p>
+            </div>
+
+            <div class="card" data-category="early">
+                <div class="card-header">
+                    <span class="badge early-year">Campus Life</span>
+                    <span class="date">June 15, 2026</span>
+                </div>
+                <h3>Freshmen Orientation</h3>
+                <p>Welcome to our new students! Join our scheduled campus tours and department-specific assemblies. This is required to introduce school policies, grading metrics, and your respective faculty members.</p>
+            </div>
+
+            <div class="card" data-category="early">
+                <div class="card-header">
+                    <span class="badge early-year">Academic</span>
+                    <span class="date">June 22, 2026</span>
+                </div>
+                <h3>Opening of Classes</h3>
+                <p>The waiting is over. Get ready for the formal commencement of lectures and laboratory sessions across all colleges. Check the main board for classroom pointer designations.</p>
+            </div>
+
+            <div class="card" data-category="early">
+                <div class="card-header">
+                    <span class="badge early-year">Sports Week</span>
+                    <span class="date">August 12, 2026</span>
+                </div>
+                <h3>Intramurals / Sports Fest</h3>
+                <p>Show your athletic spirit! Get ready for college-wide athletic competitions and interactive games. Coordinate with your department representatives for team jerseys and tryouts.</p>
+            </div>
+
+            <div class="card" data-category="early">
+                <div class="card-header">
+                    <span class="badge early-year">Celebration</span>
+                    <span class="date">August 27, 2026</span>
+                </div>
+                <h3>Foundation Day / University Week</h3>
+                <p>Celebrate university pride! Our major annual celebration is packed with exciting academic contests, commercial fairs, pageants, and traditional cultural events.</p>
+            </div>
+
+
+            <!-- SEPTEMBER – DECEMBER EVENTS -->
+            <div class="card" data-category="mid">
+                <div class="card-header">
+                    <span class="badge mid-year">Academic</span>
+                    <span class="date">October 14, 2026</span>
+                </div>
+                <h3>Prelim & Midterm Examinations</h3>
+                <p>Time to hit the books. Major testing periods are set to evaluate students' mid-semester progress. Secure your examination clearance permits from the administrative office ahead of schedule.</p>
+            </div>
+
+            <div class="card" data-category="mid">
+                <div class="card-header">
+                    <span class="badge mid-year">Exhibitions</span>
+                    <span class="date">November 18, 2026</span>
+                </div>
+                <h3>Department Weeks & Business Expo</h3>
+                <p>Look forward to smaller, specific milestone events hosted directly by individual colleges—including specialized field assemblies, Engineering Week showcases, Nursing skill-labs, and the Business Expo displays.</p>
+            </div>
+
+            <div class="card" data-category="mid">
+                <div class="card-header">
+                    <span class="badge mid-year">Holiday Recess</span>
+                    <span class="date">December 18, 2026</span>
+                </div>
+                <h3>Semestral Break / Holiday Recess</h3>
+                <p>Enjoy your well-earned rest! Regular academic pathways pause for our scheduled one to two-week semestral break alongside the formal observance of national holidays like Undas and the Christmas seasonal recess.</p>
+            </div>
+
+
+            <!-- JANUARY – MAY EVENTS -->
+            <div class="card" data-category="late">
+                <div class="card-header">
+                    <span class="badge late-year">Academic</span>
+                    <span class="date">March 03, 2027</span>
+                </div>
+                <h3>Final Examinations & Submissions</h3>
+                <p>The final stretch of the year. Prepare for the last official set of departmental exams, terminal project write-ups, and key capstone project defenses for graduating technical sets.</p>
+            </div>
+
+            <div class="card" data-category="late">
+                <div class="card-header">
+                    <span class="badge late-year">Research</span>
+                    <span class="date">March 24, 2027</span>
+                </div>
+                <h3>College / University Research Colloquiums</h3>
+                <p>The peak of student innovation. Graduating students will formally stand and present their full theses, system prototypes, and dynamic research findings before institutional evaluation panels.</p>
+            </div>
+
+            <div class="card" data-category="late">
+                <div class="card-header">
+                    <span class="badge late-year">Recognition</span>
+                    <span class="date">April 21, 2027</span>
+                </div>
+                <h3>Recognition & Moving-Up Ceremonies</h3>
+                <p>Let's celebrate hard work! We look forward to holding our non-graduating honors assemblies and departmental awarding events to recognize academic excellence throughout the year.</p>
+            </div>
+
+            <div class="card" data-category="late">
+                <div class="card-header">
+                    <span class="badge late-year">Graduation</span>
+                    <span class="date">May 19, 2027</span>
+                </div>
+                <h3>Commencement Exercises (Graduation Day)</h3>
+                <p>Congratulations, graduates! The formal culmination of your journey at CPSU Moises Padilla Campus. The official graduation ceremonies will look to honor our successful senior classes.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JavaScript: Dynamic Filtering -->
+    <script>
+        function filterAnnouncements(category) {
+            // Update Active State Class on Filter Buttons
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            // Hide/Show Card Target Logic
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+                
+                if (category === 'all' || cardCategory === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
